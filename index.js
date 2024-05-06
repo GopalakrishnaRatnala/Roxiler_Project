@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require("express");
 const path = require("path");
 const axios = require("axios");
@@ -8,6 +9,8 @@ const sqlite3 = require("sqlite3");
 const app = express();
 const dbPath = path.join(__dirname, "database.db");
 
+const port = 3004
+
 let db = null;
 
 const initializeDBAndServer = async () => {
@@ -17,7 +20,7 @@ const initializeDBAndServer = async () => {
       driver: sqlite3.Database,
     });
 
-    app.listen(3004, () => {
+    app.listen(process.env.PORT, () => {
       console.log("Server Running at http://localhost:3004/");
     });
 
