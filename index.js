@@ -21,7 +21,7 @@ const initializeDBAndServer = async () => {
     });
 
     app.listen(process.env.PORT, () => {
-      console.log("Server Running at http://localhost:3004/");
+      console.log(`Server Running at http://localhost:${process.env.PORT}/`);
     });
 
     await fetchAndInsert();
