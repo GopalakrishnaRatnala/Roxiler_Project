@@ -1,5 +1,5 @@
 Send Resquest
-GET http://localhost:3004/tasks
+GET http://localhost:3004/
 ###
 
 GET http://localhost:3004/transactions/01

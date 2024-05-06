@@ -33,50 +33,43 @@ const initializeDBAndServer = async () => {
 initializeDBAndServer();
 
 const fetchAndInsert = async () => {
-  const response = await axios.get(
-    "https://s3.amazonaws.com/roxiler.com/product_transaction.json"
-  );
-  const data = response.data;
 
-
-  for (let item of data) {
-    const queryData = `SELECT id FROM transactions WHERE id = ${item.id}`;
-    const existingData = await db.get(queryData);
-    if (existingData === undefined) {
-      const query = `
-   INSERT INTO transactions (id, title, price, description, category, image, sold, dateOfSale) 
-   VALUES (
-       ${item.id},
-       '${item.title.replace(/'/g, "''")}',
-       ${item.price},
-       '${item.description.replace(/'/g, "''")}',
-       '${item.category.replace(/'/g, "''")}',
-       '${item.image.replace(/'/g, "''")}',
-       ${item.sold},
-       '${item.dateOfSale.replace(/'/g, "''")}'
-   );
-`; 
-
-      await db.run(query);
+  try{
+    const response = await axios.get(
+      "https://s3.amazonaws.com/roxiler.com/product_transaction.json"
+    );
+    const data = response.data;
+  
+  
+    for (let item of data) {
+      const queryData = `SELECT id FROM transactions WHERE id = ${item.id}`;
+      const existingData = await db.get(queryData);
+      if (existingData === undefined) {
+        const query = `
+     INSERT INTO transactions (id, title, price, description, category, image, sold, dateOfSale) 
+     VALUES (
+         ${item.id},
+         '${item.title.replace(/'/g, "''")}',
+         ${item.price},
+         '${item.description.replace(/'/g, "''")}',
+         '${item.category.replace(/'/g, "''")}',
+         '${item.image.replace(/'/g, "''")}',
+         ${item.sold},
+         '${item.dateOfSale.replace(/'/g, "''")}'
+     );
+  `; 
+  
+        await db.run(query);
+      }
     }
+    console.log("Transactions added");
   }
-  console.log("Transactions added");
-};
+  catch(error){
+    console.error("Error fetching or inserting transactions:", error);
+  }
+}
+  
 
-
-// Get Transactions API 
-
-app.get("/tasks/", async (request, response) =>{
-  const getTransactionsQuery = `
-  SELECT 
-  * 
-  FROM 
-  transactions 
-  ORDER BY id
-  `;
-  const transactionsArray = await db.all(getTransactionsQuery);
-  response.send(transactionsArray);
-})
 
 // Get API to list the all transactions
 
