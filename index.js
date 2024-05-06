@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require("express");
+const cors = require('cors');
 const path = require("path");
 const axios = require("axios");
 
@@ -8,6 +9,8 @@ const sqlite3 = require("sqlite3");
 
 const app = express();
 const dbPath = path.join(__dirname, "database.db");
+
+app.use(cors());
 
 const port = 3004
 
