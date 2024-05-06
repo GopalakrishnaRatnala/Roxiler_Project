@@ -1,0 +1,19 @@
+Send Resquest
+GET http://localhost:3004/tasks
+###
+
+GET http://localhost:3004/transactions/01
+###
+
+GET http://localhost:3004/bar-chart/01
+###
+
+GET http://localhost:3004/statistics/01
+###
+
+GET http://localhost:3004/pie-chart/01
+###
+
+GET http://localhost:3004/combined-data/01
+###
+
